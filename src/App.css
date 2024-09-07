@@ -18,16 +18,20 @@
 }
 
 .family-image {
-  max-width: 100%;
+  max-width: 80%;
   height: auto;
   border-radius: 10px;
   margin: 20px 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .quote {
   font-style: italic;
   font-size: 1.5em;
   margin: 20px 0;
+  text-align: center;
 }
 
 h1 {
