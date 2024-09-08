@@ -22,11 +22,6 @@ function App() {
   };
 
   const fetchAccessToken = async (authCode) => {
-    const tokenConfig = {
-      code: authCode,
-      redirect_uri: 'http://localhost:3000/callback',
-      scope: 'https://www.googleapis.com/auth/photoslibrary.readonly',
-    };
     const tokenResponse = await fetch(oauth2Client.tokenEndpoint, {
       method: 'POST',
       headers: {
