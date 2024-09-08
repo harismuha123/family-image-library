@@ -46,4 +46,4 @@ jobs:
 
     - name: Deploy build to Namecheap
       run: |
-        sshpass -p "${{ secrets.SSH_USER_PASSWORD }}" rsync -avz --delete -e 'ssh -i ~/.ssh/family-image-library -p 21098' ./build/ cherhhvj@198.54.125.112:/home/cherhhvj/www/family-image-library/public_html/family-image-library
+        sshpass -p "${{ secrets.SSH_USER_PASSWORD }}" rsync -avz --delete -e 'ssh -i ~/.ssh/family-image-library -p 21098' ./build/ cherhhvj@198.54.125.112:/home/cherhhvj/public_html/family-image-library
