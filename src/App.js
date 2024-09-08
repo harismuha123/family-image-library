@@ -133,7 +133,7 @@ function App() {
         setLoading(false);
       });
 
-    fetch('https://api.quotable.io/random')
+    fetch('https://api.quotable.io/random?tags=love')
       .then(response => response.json())
       .then(data => setQuote(data.content));
 
@@ -219,7 +219,7 @@ function App() {
         });
 
       // Fetch quote from a free quote API
-      fetch('https://api.quotable.io/random?tags=family')
+      fetch('https://api.quotable.io/random?tags=love')
         .then(response => response.json())
         .then(data => setQuote(data.content));
 
