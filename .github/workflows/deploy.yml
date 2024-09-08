@@ -47,3 +47,7 @@ jobs:
     - name: Deploy build to Namecheap
       run: |
         sshpass -p "${{ secrets.SSH_USER_PASSWORD }}" rsync -avz --delete -e 'ssh -i ~/.ssh/family-image-library -p 21098' ./build/ cherhhvj@198.54.125.112:/home/cherhhvj/public_html/family-image-library
+
+    - name: Upload .htaccess
+      run: |
+        sshpass -p "${{ secrets.SSH_USER_PASSWORD }}" scp -P 21098 -i ~/.ssh/family-image-library ./.htaccess cherhhvj@198.54.125.112:/home/cherhhvj/public_html/family-image-library/.htaccess
