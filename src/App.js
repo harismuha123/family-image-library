@@ -49,10 +49,6 @@ function App() {
       if (!tokenResponse.ok) {
         throw new Error('Failed to fetch access token');
       }
-      const tokens = await tokenResponse.json();
-      localStorage.setItem('access_token', tokens.access_token);
-      localStorage.setItem('refresh_token', tokens.refresh_token);
-      setAccessToken(tokens.access_token);
     } catch (error) {
       console.error('Error fetching access token:', error);
       window.location.href = `${oauth2Client.authorizationEndpoint}?client_id=${oauth2Client.clientId}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
@@ -165,26 +161,6 @@ function App() {
       }
     }
   }, [accessToken]);
-
-  useEffect(() => {
-    const storedAccessToken = localStorage.getItem('access_token');
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    } else {
-      const authUrl = `${oauth2Client.authorizationEndpoint}?client_id=${oauth2Client.clientId}&redirect_uri=http://localhost:3000/callback&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
-      window.location.href = authUrl;
-    }
-  }, []);
-
-  useEffect(() => {
-    const storedAccessToken = localStorage.getItem('access_token');
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    } else {
-      const authUrl = `${oauth2Client.authorizationEndpoint}?client_id=${oauth2Client.clientId}&redirect_uri=http://localhost:3000/callback&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
-      window.location.href = authUrl;
-    }
-  }, []);
 
   useEffect(() => {
     if (accessToken) {
