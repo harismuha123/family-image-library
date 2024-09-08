@@ -35,7 +35,7 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H your_server_ip >> ~/.ssh/known_hosts
+        ssh-keyscan -H 198.54.125.112 >> ~/.ssh/known_hosts
 
     - name: Deploy build to Namecheap
       run: |
