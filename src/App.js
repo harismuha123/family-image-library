@@ -156,7 +156,7 @@ function App() {
       if (storedAccessToken) {
         setAccessToken(storedAccessToken);
       } else {
-        const authUrl = `${oauth2Client.authorizationEndpoint}?client_id=${oauth2Client.clientId}&redirect_uri=http://localhost:3000/callback&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
+        const authUrl = `${oauth2Client.authorizationEndpoint}?client_id=${oauth2Client.clientId}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
         window.location.href = authUrl;
       }
     }
