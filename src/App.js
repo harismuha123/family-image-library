@@ -32,10 +32,15 @@ function App() {
           code: authCode,
           client_id: oauth2Client.clientId,
           client_secret: oauth2Client.clientSecret,
-          redirect_uri: 'http://localhost:3000/callback',
+          redirect_uri: process.env.REACT_APP_REDIRECT_URI,
           grant_type: 'authorization_code',
         }),
       });
+
+      if (!tokenResponse.ok) {
+        const errorData = await tokenResponse.json();
+        throw new Error(`Failed to fetch access token: ${errorData.error}`);
+      }
       if (!tokenResponse.ok) {
         throw new Error('Failed to fetch access token');
       }
