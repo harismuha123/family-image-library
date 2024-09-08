@@ -38,7 +38,7 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/family-image-library
         chmod 600 ~/.ssh/family-image-library
-        ssh-keyscan -H 198.54.125.112 -p 21098 >> ~/.ssh/known_hosts
+        ssh-keyscan -p 21098 198.54.125.112>> ~/.ssh/known_hosts
 
     - name: Test SSH Connection
       run: |
