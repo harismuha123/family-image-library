@@ -41,6 +41,11 @@ function App() {
         const errorData = await tokenResponse.json();
         throw new Error(`Failed to fetch access token: ${errorData.error}`);
       }
+
+      const tokens = await tokenResponse.json();
+      localStorage.setItem('access_token', tokens.access_token);
+      localStorage.setItem('refresh_token', tokens.refresh_token);
+      setAccessToken(tokens.access_token);
       if (!tokenResponse.ok) {
         throw new Error('Failed to fetch access token');
       }
@@ -50,6 +55,7 @@ function App() {
       setAccessToken(tokens.access_token);
     } catch (error) {
       console.error('Error fetching access token:', error);
+      window.location.href = `${oauth2Client.authorizationEndpoint}?client_id=${oauth2Client.clientId}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
     }
   };
 
