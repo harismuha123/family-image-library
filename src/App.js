@@ -22,23 +22,30 @@ function App() {
   };
 
   const fetchAccessToken = async (authCode) => {
-    const tokenResponse = await fetch(oauth2Client.tokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        code: authCode,
-        client_id: oauth2Client.clientId,
-        client_secret: oauth2Client.clientSecret,
-        redirect_uri: 'http://localhost:3000/callback',
-        grant_type: 'authorization_code',
-      }),
-    });
-    const tokens = await tokenResponse.json();
-    localStorage.setItem('access_token', tokens.access_token);
-    localStorage.setItem('refresh_token', tokens.refresh_token);
-    setAccessToken(tokens.access_token);
+    try {
+      const tokenResponse = await fetch(oauth2Client.tokenEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          code: authCode,
+          client_id: oauth2Client.clientId,
+          client_secret: oauth2Client.clientSecret,
+          redirect_uri: 'http://localhost:3000/callback',
+          grant_type: 'authorization_code',
+        }),
+      });
+      if (!tokenResponse.ok) {
+        throw new Error('Failed to fetch access token');
+      }
+      const tokens = await tokenResponse.json();
+      localStorage.setItem('access_token', tokens.access_token);
+      localStorage.setItem('refresh_token', tokens.refresh_token);
+      setAccessToken(tokens.access_token);
+    } catch (error) {
+      console.error('Error fetching access token:', error);
+    }
   };
 
   const refreshAccessToken = async () => {
@@ -147,6 +154,16 @@ function App() {
       }
     }
   }, [accessToken]);
+
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem('access_token');
+    if (storedAccessToken) {
+      setAccessToken(storedAccessToken);
+    } else {
+      const authUrl = `${oauth2Client.authorizationEndpoint}?client_id=${oauth2Client.clientId}&redirect_uri=http://localhost:3000/callback&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
+      window.location.href = authUrl;
+    }
+  }, []);
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('access_token');
